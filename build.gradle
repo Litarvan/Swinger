@@ -1,0 +1,18 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+group = 'fr.theshark34.swinger'
+version = '1.0.0-BETA'
+archivesBaseName = 'swinger'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+compileJava.options.encoding = 'UTF-8'
+
+jar {
+    manifest {
+        attributes 'Main-Class' : 'fr.theshark34.swinger.demo.DemoFrame'
+    }
+}
