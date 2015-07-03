@@ -78,11 +78,14 @@ public class STexturedProgressBar extends AbstractProgressBar {
         // Doing a cross mult to get the width/height of the foreground texture to use
         int fgSize = Swinger.crossMult(getValue(), getMaximum(), isVertical() ? foregroundTexture.getHeight() : foregroundTexture.getWidth());
 
-        // Getting the sub image of the foreground
-        BufferedImage subForeground = foregroundTexture.getSubimage(0, 0, isVertical() ? foregroundTexture.getWidth() : fgSize, isVertical() ? fgSize : foregroundTexture.getHeight());
+        // If the fgSize isn't 0
+        if(fgSize > 0) {
+            // Getting the sub image of the foreground
+            BufferedImage subForeground = foregroundTexture.getSubimage(0, 0, isVertical() ? foregroundTexture.getWidth() : fgSize, isVertical() ? fgSize : foregroundTexture.getHeight());
 
-        // Then drawing it
-        g.drawImage(subForeground, 0, 0, subForeground.getWidth(), subForeground.getHeight(), this);
+            // Then drawing it
+            g.drawImage(subForeground, 0, 0, subForeground.getWidth(), subForeground.getHeight(), this);
+        }
 
         // If the string is painted
         if(isStringPainted()) {
