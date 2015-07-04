@@ -19,10 +19,14 @@
 package fr.theshark34.swinger;
 
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.ImageObserver;
@@ -241,6 +245,46 @@ public class Swinger {
         double y = parent.getHeight() / 2 - rectangle.getHeight() / 2;
 
         return new Point((int) x, (int) y);
+    }
+
+    /**
+     * Draw a centered string
+     *
+     * @param g
+     *            The graphics to use to draw
+     * @param str
+     *            The string to draw
+     * @param parent
+     *            The parent space where the string will be drawn
+     */
+    public static void drawCenteredString(Graphics g, String str, Rectangle parent) {
+        // Getting the Font Metrics
+        FontMetrics fm = g.getFontMetrics();
+
+        // Getting the string bounds
+        Rectangle2D stringBounds = fm.getStringBounds(str, g);
+
+        // Getting the center pos for this rectangle
+        Point centerPos = Swinger.getRecCenterPos(parent, stringBounds.getBounds());
+
+        // Drawing the text, centered
+        g.drawString(str, (int) centerPos.getX(), (int) centerPos.getY());
+    }
+
+    /**
+     * Activate the antialias and the text antialias
+     * for the given graphics
+     *
+     * @param g
+     *            The graphics to set the antialias
+     */
+    public static void activateAntialias(Graphics g) {
+        ((Graphics2D) g).setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        ((Graphics2D) g).setRenderingHint(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     }
 
 }

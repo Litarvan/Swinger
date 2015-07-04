@@ -124,7 +124,10 @@ public class SColoredButton extends AbstractButton {
             this.colorDisabled = colorDisabled;
     }
 
+    @Override
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
         // Getting the corresponding color
         Color color;
         if(!this.isEnabled())
@@ -141,29 +144,71 @@ public class SColoredButton extends AbstractButton {
         // If the text is not null
         if(getText() != null) {
             // Activating the anti alias
-            ((Graphics2D) g).setRenderingHint(
-                    RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
-            ((Graphics2D) g).setRenderingHint(
-                    RenderingHints.KEY_TEXT_ANTIALIASING,
-                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
-            // Getting the Font Metrics
-            FontMetrics fm = g.getFontMetrics();
-
-            // Getting the string bounds
-            Rectangle2D stringBounds = fm.getStringBounds(getText(), g);
-
-            // Getting the center pos for this rectangle
-            Point centerPos = Swinger.getRecCenterPos(this.getBounds(), stringBounds.getBounds());
+            Swinger.activateAntialias(g);
 
             // Picking the string color
             if (getStringColor() != null)
                 g.setColor(getStringColor());
 
             // Drawing the text, centered
-            g.drawString(getText(), (int) centerPos.getX(), (int) centerPos.getY());
+            Swinger.drawCenteredString(g, getText(), this.getBounds());
         }
     }
 
+    /**
+     * Set the button color
+     *
+     * @param color
+     *            The new button color
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    /**
+     * Return the button color
+     *
+     * @return The button color
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * Set the button color when the mouse is on
+     *
+     * @param colorHover
+     *            The new button hover color
+     */
+    public void setColorHover(Color colorHover) {
+        this.colorHover = colorHover;
+    }
+
+    /**
+     * Return the button color when the mouse is on
+     *
+     * @return The button hover color
+     */
+    public Color getColorHover() {
+        return colorHover;
+    }
+
+    /**
+     * Set the button color when it is disabled
+     *
+     * @param colorDisabled
+     *            The new button disabled color
+     */
+    public void setColorDisabled(Color colorDisabled) {
+        this.colorDisabled = colorDisabled;
+    }
+
+    /**
+     * Return the button color when it is disabled
+     *
+     * @return The button disabled color
+     */
+    public Color getColorDisabled() {
+        return colorDisabled;
+    }
 }

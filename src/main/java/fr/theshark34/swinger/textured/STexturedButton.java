@@ -150,28 +150,14 @@ public class STexturedButton extends AbstractButton {
         // If the text is not null
         if(getText() != null) {
             // Activating the anti alias
-            ((Graphics2D) g).setRenderingHint(
-                    RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
-            ((Graphics2D) g).setRenderingHint(
-                    RenderingHints.KEY_TEXT_ANTIALIASING,
-                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
-            // Getting the Font Metrics
-            FontMetrics fm = g.getFontMetrics();
-
-            // Getting the string bounds
-            Rectangle2D stringBounds = fm.getStringBounds(getText(), g);
-
-            // Getting the center pos for this rectangle
-            Point centerPos = Swinger.getRecCenterPos(this.getBounds(), stringBounds.getBounds());
+            Swinger.activateAntialias(g);
 
             // Picking the string color
             if (getStringColor() != null)
                 g.setColor(getStringColor());
 
             // Drawing the text, centered
-            g.drawString(getText(), (int) centerPos.getX(), (int) centerPos.getY());
+            Swinger.drawCenteredString(g, getText(), this.getBounds());
         }
     }
 
