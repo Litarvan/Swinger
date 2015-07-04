@@ -67,11 +67,6 @@ public class STexturedProgressBar extends AbstractProgressBar {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Clearing
-        ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-        g.setColor(Swinger.TRANSPARENT);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
-
         // Drawing the background texture
         g.drawImage(backgroundTexture, 0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight(), this);
 
@@ -141,22 +136,6 @@ public class STexturedProgressBar extends AbstractProgressBar {
      */
     public BufferedImage getForegroundTexture() {
         return this.foregroundTexture;
-    }
-
-    /**
-     * Set bounds by the given cords, and the texture size.
-     * Same as :
-     * <code>
-     *     setBounds(x, y, getBackgroundTexture().getWidth(getParent()), getBackgroundTexture().getHeight(getParent()));
-     * </code>
-     *
-     * @param x
-     *            The button x cord
-     * @param y
-     *            The button y cord
-     */
-    public void setBounds(int x, int y) {
-        this.setBounds(x, y, this.backgroundTexture.getWidth(this.getParent()), this.backgroundTexture.getHeight(this.getParent()));
     }
 
 }
