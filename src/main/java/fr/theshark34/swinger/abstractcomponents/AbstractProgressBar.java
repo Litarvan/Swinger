@@ -18,6 +18,7 @@
  */
 package fr.theshark34.swinger.abstractcomponents;
 
+import java.awt.Color;
 import javax.swing.JComponent;
 
 /**
@@ -52,6 +53,11 @@ public abstract class AbstractProgressBar extends JComponent {
      * If the string is painted
      */
     private boolean stringPainted;
+
+    /**
+     * The color of the string
+     */
+    private Color stringColor;
 
     /**
      * If the bar is vertical
@@ -136,6 +142,25 @@ public abstract class AbstractProgressBar extends JComponent {
      */
     public boolean isStringPainted() {
         return stringPainted;
+    }
+
+    /**
+     * Set the string color
+     *
+     * @param stringColor
+     *            The new string color
+     */
+    public void setStringColor(Color stringColor) {
+        this.stringColor = stringColor;
+    }
+
+    /**
+     * Return the string color (default is null)
+     *
+     * @return The string color
+     */
+    public Color getStringColor() {
+        return stringColor;
     }
 
     /**

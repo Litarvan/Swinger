@@ -21,6 +21,7 @@ package fr.theshark34.swinger.abstractcomponents;
 import fr.theshark34.swinger.event.SwingerEvent;
 import fr.theshark34.swinger.event.SwingerEventListener;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -38,6 +39,16 @@ import javax.swing.JComponent;
  * @author TheShark34
  */
 public abstract class AbstractButton extends JComponent implements MouseListener {
+
+    /**
+     * The button text
+     */
+    private String text;
+
+    /**
+     * The color of the string
+     */
+    private Color stringColor;
 
     /**
      * The event listeners, to execute when the button was clicked
@@ -86,6 +97,44 @@ public abstract class AbstractButton extends JComponent implements MouseListener
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         repaint();
+    }
+
+    /**
+     * Set the text of the button
+     *
+     * @param text
+     *            The new button text
+     */
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    /**
+     * Return the text of the button
+     *
+     * @return The button text
+     */
+    public String getText() {
+        return text;
+    }
+
+    /**
+     * Set the string color
+     *
+     * @param stringColor
+     *            The new string color
+     */
+    public void setStringColor(Color stringColor) {
+        this.stringColor = stringColor;
+    }
+
+    /**
+     * Return the string color (default is null)
+     *
+     * @return The string color
+     */
+    public Color getStringColor() {
+        return stringColor;
     }
 
     /**

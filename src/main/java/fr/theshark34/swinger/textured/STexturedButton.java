@@ -22,9 +22,13 @@ import fr.theshark34.swinger.Swinger;
 import fr.theshark34.swinger.abstractcomponents.AbstractButton;
 
 import java.awt.AlphaComposite;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -142,6 +146,33 @@ public class STexturedButton extends AbstractButton {
 
         // Then drawing it
         g.drawImage(texture, 0, 0, this.getWidth(), this.getHeight(), this.getParent());
+
+        // If the text is not null
+        if(getText() != null) {
+            // Activating the anti alias
+            ((Graphics2D) g).setRenderingHint(
+                    RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            ((Graphics2D) g).setRenderingHint(
+                    RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+            // Getting the Font Metrics
+            FontMetrics fm = g.getFontMetrics();
+
+            // Getting the string bounds
+            Rectangle2D stringBounds = fm.getStringBounds(getText(), g);
+
+            // Getting the center pos for this rectangle
+            Point centerPos = Swinger.getRecCenterPos(this.getBounds(), stringBounds.getBounds());
+
+            // Picking the string color
+            if (getStringColor() != null)
+                g.setColor(getStringColor());
+
+            // Drawing the text, centered
+            g.drawString(getText(), (int) centerPos.getX(), (int) centerPos.getY());
+        }
     }
 
     /**
@@ -202,6 +233,22 @@ public class STexturedButton extends AbstractButton {
      */
     public Image getTextureDisabled() {
         return this.textureDisabled;
+    }
+
+    /**
+     * Set bounds by the given cords, and the texture size.
+     * Same as :
+     * <code>
+     *     setBounds(x, y, getTexture().getWidth(getParent()), getTexture().getHeight(getParent()));
+     * </code>
+     *
+     * @param x
+     *            The button x cord
+     * @param y
+     *            The button y cord
+     */
+    public void setBounds(int x, int y) {
+        this.setBounds(x, y, this.texture.getWidth(this.getParent()), this.texture.getHeight(this.getParent()));
     }
 
 }

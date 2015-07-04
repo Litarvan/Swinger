@@ -86,7 +86,13 @@ public class Swinger {
     public static void setSystemLookNFeel() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+        } catch (ClassNotFoundException e) {
+            System.out.println("[Swinger] WARNING: Can't set the system look n feel : " + e);
+        } catch (InstantiationException e) {
+            System.out.println("[Swinger] WARNING: Can't set the system look n feel : " + e);
+        } catch (IllegalAccessException e) {
+            System.out.println("[Swinger] WARNING: Can't set the system look n feel : " + e);
+        } catch (UnsupportedLookAndFeelException e) {
             System.out.println("[Swinger] WARNING: Can't set the system look n feel : " + e);
         }
     }
@@ -186,7 +192,9 @@ public class Swinger {
     public static BufferedImage getResource(String resource) {
         try {
             return ImageIO.read(Swinger.class.getResourceAsStream(getResourcePath() + "/" + resource));
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Can't load the given resource (" + getResourcePath() + "/" + resource + ") : " + e);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Can't load the given resource (" + getResourcePath() + "/" + resource + ") : " + e);
         }
     }

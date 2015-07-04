@@ -20,11 +20,11 @@ package fr.theshark34.swinger.textured;
 
 import fr.theshark34.swinger.Swinger;
 import fr.theshark34.swinger.abstractcomponents.AbstractProgressBar;
-import java.awt.AlphaComposite;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -59,7 +59,14 @@ public class STexturedProgressBar extends AbstractProgressBar {
      *            The foreground texture
      */
     public STexturedProgressBar(BufferedImage backgroundTexture, BufferedImage foregroundTexture) {
+        // If the background texture is null, throwing an Illegal Argument Exception, else setting it
+        if(backgroundTexture == null)
+            throw new IllegalArgumentException("Background Texture == null");
         this.backgroundTexture = backgroundTexture;
+
+        // If the foreground texture is null, throwing an Illegal Argument Exception, else setting it
+        if(foregroundTexture == null)
+            throw new IllegalArgumentException("Foreground Texture == null");
         this.foregroundTexture = foregroundTexture;
     }
 
@@ -82,8 +89,16 @@ public class STexturedProgressBar extends AbstractProgressBar {
             g.drawImage(subForeground, 0, 0, subForeground.getWidth(), subForeground.getHeight(), this);
         }
 
-        // If the string is painted
-        if(isStringPainted()) {
+        // If the string is painted and the string isn't null
+        if(isStringPainted() && getString() != null) {
+            // Activating the anti alias
+            ((Graphics2D) g).setRenderingHint(
+                    RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            ((Graphics2D) g).setRenderingHint(
+                    RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
             // Getting the Font Metrics
             FontMetrics fm = g.getFontMetrics();
 
@@ -91,10 +106,14 @@ public class STexturedProgressBar extends AbstractProgressBar {
             Rectangle2D stringBounds = fm.getStringBounds(getString(), g);
 
             // Getting the center pos for this rectangle
-            Point centerPos = Swinger.getRecCenterPos(stringBounds.getBounds(), this.getBounds());
+            Point centerPos = Swinger.getRecCenterPos(this.getBounds(), stringBounds.getBounds());
+
+            // Picking the string color
+            if(getStringColor() != null)
+                g.setColor(getStringColor());
 
             // Drawing the text, centered
-            g.drawString(getString(), (int) centerPos.getX(), (int) centerPos.getY());
+            g.drawString(getString(), (int) centerPos.getX(), (int) centerPos.getY() + 20);
         }
     }
 
