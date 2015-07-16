@@ -18,16 +18,10 @@
  */
 package fr.theshark34.swinger.colored;
 
-import fr.theshark34.swinger.Swinger;
+import static fr.theshark34.swinger.Swinger.*;
 import fr.theshark34.swinger.abstractcomponents.AbstractProgressBar;
 import java.awt.Color;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 /**
  * The SColoredBar
@@ -84,7 +78,7 @@ public class SColoredBar extends AbstractProgressBar {
     public SColoredBar(Color background, Color foreground) {
         // If the background color is null, throwing an Illegal Argument Exception, else setting it
         if(background == null)
-            throw new IllegalArgumentException("Background Color == null");
+            throw new IllegalArgumentException("background == null");
         this.background = background;
 
         // If the foreground color is null, creating it, else, setting it
@@ -99,11 +93,10 @@ public class SColoredBar extends AbstractProgressBar {
         super.paintComponent(g);
 
         // Drawing the background
-        g.setColor(background);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        fillFullsizedRect(this, background);
 
         // Doing a cross mult to get the width/height of the foreground texture to use
-        int fgSize = Swinger.crossMult(getValue(), getMaximum(), isVertical() ? this.getHeight() : this.getWidth());
+        int fgSize = crossMult(getValue(), getMaximum(), isVertical() ? this.getHeight() : this.getWidth());
 
         // If the fgSize isn't 0
         if(fgSize > 0) {
@@ -115,14 +108,14 @@ public class SColoredBar extends AbstractProgressBar {
         // If the string is painted and the string isn't null
         if(isStringPainted() && getString() != null) {
             // Activating the anti alias
-            Swinger.activateAntialias(g);;
+            activateAntialias(g);;
 
             // Picking the string color
             if(getStringColor() != null)
                 g.setColor(getStringColor());
 
             // Drawing the string, centered
-            Swinger.drawCenteredString(g, getString(), this.getBounds());
+            drawCenteredString(g, getString(), this.getBounds());
         }
     }
 
@@ -133,7 +126,12 @@ public class SColoredBar extends AbstractProgressBar {
      *            The new background color
      */
     public void setBackground(Color background) {
+        // If the given background color is null, throwing an Illegal Argument Exception, else setting it
+        if(background == null)
+            throw new IllegalArgumentException("background == null");
         this.background = background;
+
+        repaint();
     }
 
     /**
@@ -152,7 +150,12 @@ public class SColoredBar extends AbstractProgressBar {
      *            The new foreground color
      */
     public void setForeground(Color foreground) {
+        // If the given foreground color is null, throwing an Illegal Argument Exception, else setting it
+        if(foreground == null)
+            throw new IllegalArgumentException("foreground == null");
         this.foreground = foreground;
+
+        repaint();
     }
 
     /**

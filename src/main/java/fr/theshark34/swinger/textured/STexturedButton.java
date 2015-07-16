@@ -18,17 +18,11 @@
  */
 package fr.theshark34.swinger.textured;
 
-import fr.theshark34.swinger.Swinger;
+import static fr.theshark34.swinger.Swinger.*;
 import fr.theshark34.swinger.abstractcomponents.AbstractButton;
 
-import java.awt.AlphaComposite;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -113,20 +107,20 @@ public class STexturedButton extends AbstractButton {
 
         // If the texture is null, throwing an Illegal Argument Exception, else setting it
         if(texture == null)
-            throw new IllegalArgumentException("Texture == null");
+            throw new IllegalArgumentException("texture == null");
         this.texture = texture;
 
         // If the texture hover is null, setting it to the texture, but with a transparent rectangle
         // on it of the Swinger.HOVER_COLOR (by default WHITE) color. Else setting it
         if(textureHover == null)
-            this.textureHover = Swinger.fillImage(Swinger.copyImage(texture), Swinger.HOVER_COLOR, this.getParent());
+            this.textureHover = fillImage(copyImage(texture), HOVER_COLOR, this.getParent());
         else
             this.textureHover = textureHover;
 
         // If the texture disabled is null, setting it to the texture, but with a transparent rectangle
         // on it of the Swinger.DISABLED_COLOR (by default GRAY) color. Else setting it
         if(textureDisabled == null)
-            this.textureDisabled = Swinger.fillImage(Swinger.copyImage(texture), Swinger.DISABLED_COLOR, this.getParent());
+            this.textureDisabled = fillImage(copyImage(texture), DISABLED_COLOR, this.getParent());
         else
             this.textureDisabled = textureDisabled;
     }
@@ -145,19 +139,19 @@ public class STexturedButton extends AbstractButton {
             texture = this.texture;
 
         // Then drawing it
-        g.drawImage(texture, 0, 0, this.getWidth(), this.getHeight(), this.getParent());
+        drawFullsizedImage(this, texture);
 
         // If the text is not null
         if(getText() != null) {
             // Activating the anti alias
-            Swinger.activateAntialias(g);
+            activateAntialias(g);
 
             // Picking the string color
-            if (getStringColor() != null)
-                g.setColor(getStringColor());
+            if (getTextColor() != null)
+                g.setColor(getTextColor());
 
             // Drawing the text, centered
-            Swinger.drawCenteredString(g, getText(), this.getBounds());
+            drawCenteredString(g, getText(), this.getBounds());
         }
     }
 
@@ -168,7 +162,11 @@ public class STexturedButton extends AbstractButton {
      *            The new texture
      */
     public void setTexture(Image texture) {
+        // If the given texture is null, throwing an Illegal Argument Exception, else setting it
+        if(texture == null)
+            throw new IllegalArgumentException("texture == null");
         this.texture = texture;
+
         repaint();
     }
 
@@ -179,7 +177,11 @@ public class STexturedButton extends AbstractButton {
      *            The new hover texture
      */
     public void setTextureHover(Image textureHover) {
+        // If the given hover texture is null, throwing an Illegal Argument Exception, else setting it
+        if(textureHover == null)
+            throw new IllegalArgumentException("textureHover == null");
         this.textureHover = textureHover;
+
         repaint();
     }
 
@@ -190,7 +192,11 @@ public class STexturedButton extends AbstractButton {
      *            The new disabled texture
      */
     public void setTextureDisabled(Image textureDisabled) {
+        // If the given disabled texture is null, throwing an Illegal Argument Exception, else setting it
+        if(textureDisabled == null)
+            throw new IllegalArgumentException("textureDisabled == null");
         this.textureDisabled = textureDisabled;
+
         repaint();
     }
 

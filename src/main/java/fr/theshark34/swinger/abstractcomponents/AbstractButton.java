@@ -46,9 +46,9 @@ public abstract class AbstractButton extends JComponent implements MouseListener
     private String text;
 
     /**
-     * The color of the string
+     * The color of the text
      */
-    private Color stringColor;
+    private Color textColor;
 
     /**
      * The event listeners, to execute when the button was clicked
@@ -84,18 +84,21 @@ public abstract class AbstractButton extends JComponent implements MouseListener
     @Override
     public void mouseEntered(MouseEvent e) {
         hover = true;
+
         repaint();
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         hover = false;
+
         repaint();
     }
 
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
+
         repaint();
     }
 
@@ -106,7 +109,12 @@ public abstract class AbstractButton extends JComponent implements MouseListener
      *            The new button text
      */
     public void setText(String text) {
+        // If the given text is null, throwing an Illegal Argument Exception, else setting it
+        if(text == null)
+            throw new IllegalArgumentException("text == null");
         this.text = text;
+
+        repaint();
     }
 
     /**
@@ -119,22 +127,27 @@ public abstract class AbstractButton extends JComponent implements MouseListener
     }
 
     /**
-     * Set the string color
+     * Set the text color
      *
-     * @param stringColor
+     * @param textColor
      *            The new string color
      */
-    public void setStringColor(Color stringColor) {
-        this.stringColor = stringColor;
+    public void setTextColor(Color textColor) {
+        // If the given string color is null, throwing an Illegal Argument Exception, else setting it
+        if(textColor == null)
+            throw new IllegalArgumentException("textColor == null");
+        this.textColor = textColor;
+
+        repaint();
     }
 
     /**
-     * Return the string color (default is null)
+     * Return the text color (default is null)
      *
-     * @return The string color
+     * @return The text color
      */
-    public Color getStringColor() {
-        return stringColor;
+    public Color getTextColor() {
+        return textColor;
     }
 
     /**
@@ -145,6 +158,10 @@ public abstract class AbstractButton extends JComponent implements MouseListener
      *            The event listener to add
      */
     public void addEventListener(SwingerEventListener eventListener) {
+        // If the given event listener is null, throwing an Illegal Argument Exception, else setting it
+        if(eventListener == null)
+            throw new IllegalArgumentException("eventListener == null");
+
         this.eventListeners.add(eventListener);
     }
 

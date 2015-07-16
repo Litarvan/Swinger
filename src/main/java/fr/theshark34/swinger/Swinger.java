@@ -33,6 +33,7 @@ import java.awt.image.ImageObserver;
 import java.awt.image.WritableRaster;
 import javax.imageio.ImageIO;
 import java.io.IOException;
+import javax.swing.JComponent;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -47,7 +48,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @version 1.0.0-BETA
  * @author TheShark34
  */
-public class Swinger {
+public final class Swinger {
 
     /**
      * The Swinger version
@@ -184,7 +185,7 @@ public class Swinger {
     }
 
     /**
-     * Loads an image, same as :
+     * Loads an image (in the resource path), same as :
      *
      * <code>
      *   ImageIO.read(Swinger.class.getResourceAsStream(Swinger.getResourcePath() + "/animage"));
@@ -200,6 +201,26 @@ public class Swinger {
             throw new IllegalArgumentException("Can't load the given resource (" + getResourcePath() + "/" + resource + ") : " + e);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Can't load the given resource (" + getResourcePath() + "/" + resource + ") : " + e);
+        }
+    }
+
+    /**
+     * Loads an image (but ignore the resource path), same as :
+     *
+     * <code>
+     *   ImageIO.read(Swinger.class.getResourceAsStream("/animage"));
+     * </code>
+     *
+     * @return The load resource
+     * @throws IllegalArgumentException If it failed to load it
+     */
+    public static BufferedImage getResourceIgnorePath(String resource) {
+        try {
+            return ImageIO.read(Swinger.class.getResourceAsStream(resource));
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Can't load the given resource (" + resource + ") : " + e);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Can't load the given resource (" + resource + ") : " + e);
         }
     }
 
@@ -285,6 +306,84 @@ public class Swinger {
         ((Graphics2D) g).setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    }
+
+    /**
+     * Color an image with the given color
+     *
+     * @param image
+     *            The image to color
+     * @param red
+     *            The red of the color you wanna apply to the image
+     * @param green
+     *            The green of the color you wanna apply to the image
+     * @param blue
+     *            The blue of the color you wanna apply to the image
+     * @return The same given image, but colored with the given color
+     */
+    public static BufferedImage colorImage(BufferedImage image, int red, int green, int blue) {
+        // Creating a new translucent image with the same size as the given image, and creating its graphics
+        BufferedImage img = new BufferedImage(image.getWidth(), image.getHeight(),
+                BufferedImage.TRANSLUCENT);
+        Graphics2D graphics = img.createGraphics();
+
+        // Getting the given color with 0 alpha (its needed)
+        Color newColor = new Color(red, green, blue, 0);
+
+        // Drawing the given image, to the new image with the xor mode as the given color
+        graphics.setXORMode(newColor);
+        graphics.drawImage(image, null, 0, 0);
+        graphics.dispose();
+
+        // Returning the created image
+        return img;
+    }
+
+    /**
+     * Draws an image on all the component, same as :
+     *
+     * <code>
+     *     component.getGraphics().drawImage(image, 0, 0, component.getWidth(), component.getHeight(), component);
+     * </code>
+     *
+     * @param component
+     *            The component where to draw the image
+     * @param image
+     *            The image to draw on the component
+     */
+    public static void drawFullsizedImage(JComponent component, Image image) {
+        component.getGraphics().drawImage(image, 0, 0, component.getWidth(), component.getHeight(), component);
+    }
+
+    /**
+     * Draws a rectangle on all the component, same as :
+     *
+     * <code>
+     *     component.getGraphics().fillRect(0, 0, component.getWidth(), component.getHeight());
+     * </code>
+     *
+     * @param component
+     *            The component where to draw the rectangle
+     */
+    public static void fillFullsizedRect(JComponent component) {
+        component.getGraphics().fillRect(0, 0, component.getWidth(), component.getHeight());
+    }
+
+    /**
+     * Draws a rectangle on all the component, with the given color, same as :
+     *
+     * <code>
+     *     component.getGraphics().setColor(color);
+     *     component.getGraphics().fillRect(0, 0, component.getWidth(), component.getHeight());
+     * </code>
+     *
+     * @param component
+     *            The component where to draw the rectangle
+     */
+    public static void fillFullsizedRect(JComponent component, Color color) {
+        Graphics g = component.getGraphics();
+        g.setColor(color);
+        g.fillRect(0, 0, component.getWidth(), component.getHeight());
     }
 
 }

@@ -18,15 +18,10 @@
  */
 package fr.theshark34.swinger.colored;
 
-import fr.theshark34.swinger.Swinger;
+import static fr.theshark34.swinger.Swinger.*;
 import fr.theshark34.swinger.abstractcomponents.AbstractButton;
 import java.awt.Color;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
 
 /**
  * The SColoredButton
@@ -138,20 +133,19 @@ public class SColoredButton extends AbstractButton {
             color = this.color;
 
         // Drawing the button
-        g.setColor(color);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        fillFullsizedRect(this, color);
 
         // If the text is not null
         if(getText() != null) {
             // Activating the anti alias
-            Swinger.activateAntialias(g);
+            activateAntialias(g);
 
             // Picking the string color
-            if (getStringColor() != null)
-                g.setColor(getStringColor());
+            if (getTextColor() != null)
+                g.setColor(getTextColor());
 
             // Drawing the text, centered
-            Swinger.drawCenteredString(g, getText(), this.getBounds());
+            drawCenteredString(g, getText(), this.getBounds());
         }
     }
 
@@ -162,7 +156,12 @@ public class SColoredButton extends AbstractButton {
      *            The new button color
      */
     public void setColor(Color color) {
+        // If the given color is null, throwing an Illegal Argument Exception, else setting it
+        if(color == null)
+            throw new IllegalArgumentException("Color == null");
         this.color = color;
+
+        repaint();
     }
 
     /**
@@ -181,7 +180,12 @@ public class SColoredButton extends AbstractButton {
      *            The new button hover color
      */
     public void setColorHover(Color colorHover) {
+        // If the given hover color is null, throwing an Illegal Argument Exception, else setting it
+        if(colorHover == null)
+            throw new IllegalArgumentException("colorHover == null");
         this.colorHover = colorHover;
+
+        repaint();
     }
 
     /**
@@ -200,7 +204,12 @@ public class SColoredButton extends AbstractButton {
      *            The new button disabled color
      */
     public void setColorDisabled(Color colorDisabled) {
+        // If the given disabled color is null, throwing an Illegal Argument Exception, else setting it
+        if(colorDisabled == null)
+            throw new IllegalArgumentException("colorDisabled == null");
         this.colorDisabled = colorDisabled;
+
+        repaint();
     }
 
     /**

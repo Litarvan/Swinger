@@ -72,6 +72,7 @@ public abstract class AbstractProgressBar extends JComponent {
      */
     public void setValue(int value) {
         this.value = value;
+
         repaint();
     }
 
@@ -92,6 +93,7 @@ public abstract class AbstractProgressBar extends JComponent {
      */
     public void setMaximum(int maximum) {
         this.maximum = maximum;
+
         repaint();
     }
 
@@ -111,7 +113,11 @@ public abstract class AbstractProgressBar extends JComponent {
      *            The new string to set
      */
     public void setString(String string) {
+        // If the given string is null, throwing an Illegal Argument Exception, else setting it
+        if(string == null)
+            throw new IllegalArgumentException("string == null");
         this.string = string;
+
         repaint();
     }
 
@@ -132,6 +138,7 @@ public abstract class AbstractProgressBar extends JComponent {
      */
     public void setStringPainted(boolean stringPainted) {
         this.stringPainted = stringPainted;
+
         repaint();
     }
 
@@ -151,7 +158,12 @@ public abstract class AbstractProgressBar extends JComponent {
      *            The new string color
      */
     public void setStringColor(Color stringColor) {
+        // If the given string color is null, throwing an Illegal Argument Exception, else setting it
+        if(stringColor == null)
+            throw new IllegalArgumentException("stringColor == null");
         this.stringColor = stringColor;
+
+        repaint();
     }
 
     /**
@@ -171,6 +183,7 @@ public abstract class AbstractProgressBar extends JComponent {
      */
     public void setVertical(boolean vertical) {
         this.vertical = vertical;
+
         repaint();
     }
 

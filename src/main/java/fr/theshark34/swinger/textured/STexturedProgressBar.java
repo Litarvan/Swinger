@@ -18,14 +18,9 @@
  */
 package fr.theshark34.swinger.textured;
 
-import fr.theshark34.swinger.Swinger;
+import static fr.theshark34.swinger.Swinger.*;
 import fr.theshark34.swinger.abstractcomponents.AbstractProgressBar;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -75,15 +70,15 @@ public class STexturedProgressBar extends AbstractProgressBar {
         super.paintComponent(g);
 
         // Drawing the background texture
-        g.drawImage(backgroundTexture, 0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight(), this);
+        drawFullsizedImage(this, backgroundTexture);
 
         // Doing a cross mult to get the width/height of the foreground texture to use
-        int fgSize = Swinger.crossMult(getValue(), getMaximum(), isVertical() ? foregroundTexture.getHeight() : foregroundTexture.getWidth());
+        int fgSize = crossMult(getValue(), getMaximum(), isVertical() ? this.getHeight() : this.getWidth());
 
         // If the fgSize isn't 0
         if(fgSize > 0) {
             // Getting the sub image of the foreground
-            BufferedImage subForeground = foregroundTexture.getSubimage(0, 0, isVertical() ? foregroundTexture.getWidth() : fgSize, isVertical() ? fgSize : foregroundTexture.getHeight());
+            BufferedImage subForeground = foregroundTexture.getSubimage(0, 0, isVertical() ? this.getWidth() : fgSize, isVertical() ? fgSize : this.getHeight());
 
             // Then drawing it
             g.drawImage(subForeground, 0, 0, subForeground.getWidth(), subForeground.getHeight(), this);
@@ -92,14 +87,14 @@ public class STexturedProgressBar extends AbstractProgressBar {
         // If the string is painted and the string isn't null
         if(isStringPainted() && getString() != null) {
             // Activating the anti alias
-            Swinger.activateAntialias(g);
+            activateAntialias(g);
 
             // Picking the string color
             if(getStringColor() != null)
                 g.setColor(getStringColor());
 
             // Drawing the string, centered
-            Swinger.drawCenteredString(g, getString(), this.getBounds());
+            drawCenteredString(g, getString(), this.getBounds());
         }
     }
 
@@ -110,7 +105,11 @@ public class STexturedProgressBar extends AbstractProgressBar {
      *            The new texture
      */
     public void setBackgroundTexture(BufferedImage backgroundTexture) {
+        // If the given background texture is null, throwing an Illegal Argument Exception, else setting it
+        if(backgroundTexture == null)
+            throw new IllegalArgumentException("backgroundTexture == null");
         this.backgroundTexture = backgroundTexture;
+
         repaint();
     }
 
@@ -130,7 +129,11 @@ public class STexturedProgressBar extends AbstractProgressBar {
      *            The new texture
      */
     public void setForegroundTexture(BufferedImage foregroundTexture) {
+        // If the given foreground texture is null, throwing an Illegal Argument Exception, else setting it
+        if(foregroundTexture == null)
+            throw new IllegalArgumentException("foregroundTexture == null");
         this.foregroundTexture = foregroundTexture;
+
         repaint();
     }
 
