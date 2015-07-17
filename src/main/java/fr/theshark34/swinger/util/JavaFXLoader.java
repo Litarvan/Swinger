@@ -27,7 +27,7 @@ import java.net.URLClassLoader;
  * The JavaFX Loader
  *
  * <p>
- *   Loads JavaFX for Java 6 / Java 7
+ *   Loads JavaFX for Java 7
  * </p>
  *
  * @version 1.0.0-BETA
