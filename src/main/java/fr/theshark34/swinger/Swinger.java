@@ -343,45 +343,50 @@ public final class Swinger {
      * Draws an image on all the component, same as :
      *
      * <code>
-     *     component.getGraphics().drawImage(image, 0, 0, component.getWidth(), component.getHeight(), component);
+     *     gdrawImage(image, 0, 0, component.getWidth(), component.getHeight(), component);
      * </code>
      *
+     * @param g
+     *            The graphics of the component
      * @param component
      *            The component where to draw the image
      * @param image
      *            The image to draw on the component
      */
-    public static void drawFullsizedImage(JComponent component, Image image) {
-        component.getGraphics().drawImage(image, 0, 0, component.getWidth(), component.getHeight(), component);
+    public static void drawFullsizedImage(Graphics g, JComponent component, Image image) {
+        g.drawImage(image, 0, 0, component.getWidth(), component.getHeight(), component);
     }
 
     /**
      * Draws a rectangle on all the component, same as :
      *
      * <code>
-     *     component.getGraphics().fillRect(0, 0, component.getWidth(), component.getHeight());
+     *     g.fillRect(0, 0, component.getWidth(), component.getHeight());
      * </code>
      *
+     * @param g
+     *            The graphics of the component
      * @param component
      *            The component where to draw the rectangle
      */
-    public static void fillFullsizedRect(JComponent component) {
-        component.getGraphics().fillRect(0, 0, component.getWidth(), component.getHeight());
+    public static void fillFullsizedRect(Graphics g, JComponent component) {
+        g.fillRect(0, 0, component.getWidth(), component.getHeight());
     }
 
     /**
      * Draws a rectangle on all the component, with the given color, same as :
      *
      * <code>
-     *     component.getGraphics().setColor(color);
-     *     component.getGraphics().fillRect(0, 0, component.getWidth(), component.getHeight());
+     *     g.setColor(color);
+     *     g.fillRect(0, 0, component.getWidth(), component.getHeight());
      * </code>
      *
+     * @param g
+     *            The graphics of the component
      * @param component
      *            The component where to draw the rectangle
      */
-    public static void fillFullsizedRect(JComponent component, Color color) {
-        Graphics g = component.getGraphics();
+    public static void fillFullsizedRect(Graphics g, JComponent component, Color color) {
         g.setColor(color);
         g.fillRect(0, 0, component.getWidth(), component.getHeight());
     }

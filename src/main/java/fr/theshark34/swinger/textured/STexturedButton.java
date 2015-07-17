@@ -139,7 +139,7 @@ public class STexturedButton extends AbstractButton {
             texture = this.texture;
 
         // Then drawing it
-        drawFullsizedImage(this, texture);
+        drawFullsizedImage(g, this, texture);
 
         // If the text is not null
         if(getText() != null) {

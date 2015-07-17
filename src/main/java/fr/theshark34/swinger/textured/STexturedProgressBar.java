@@ -70,7 +70,7 @@ public class STexturedProgressBar extends AbstractProgressBar {
         super.paintComponent(g);
 
         // Drawing the background texture
-        drawFullsizedImage(this, backgroundTexture);
+        drawFullsizedImage(g, this, backgroundTexture);
 
         // Doing a cross mult to get the width/height of the foreground texture to use
         int fgSize = crossMult(getValue(), getMaximum(), isVertical() ? this.getHeight() : this.getWidth());

@@ -133,7 +133,7 @@ public class SColoredButton extends AbstractButton {
             color = this.color;
 
         // Drawing the button
-        fillFullsizedRect(this, color);
+        fillFullsizedRect(g, this, color);
 
         // If the text is not null
         if(getText() != null) {

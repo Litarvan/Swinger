@@ -100,11 +100,11 @@ public class SColoredCheckbox extends AbstractCheckbox {
         g.setColor(this.backgroundColor);
 
         // Drawing the background
-        fillFullsizedRect(this);
+        fillFullsizedRect(g, this);
 
         // If the color isn't the white, coloring the check image, then drawing it
         Image check = backgroundColor.equals(Color.WHITE) ? CHECK_IMAGE : colorImage(copyImage(CHECK_IMAGE), checkColor.getRed(), checkColor.getGreen(), checkColor.getBlue());
-        drawFullsizedImage(this, check);
+        drawFullsizedImage(g, this, check);
     }
 
     /**

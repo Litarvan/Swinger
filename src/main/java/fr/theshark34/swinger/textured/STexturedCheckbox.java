@@ -68,12 +68,12 @@ public class STexturedCheckbox extends AbstractCheckbox {
     @Override
     public void paintComponent(Graphics g) {
         // Drawing the background
-        drawFullsizedImage(this, backgroundImage);
+        drawFullsizedImage(g, this, backgroundImage);
 
         // If it is checked
         if(this.isChecked())
             // Drawing the little check image
-            drawFullsizedImage(this, checkImage);
+            drawFullsizedImage(g, this, checkImage);
     }
 
     /**
