@@ -210,7 +210,7 @@ public class Animator {
             @Override
             public void onLoop(long query) {
                 AWTUtilities.setWindowOpacity(toFade, inverted ?
-                        100 - ((float) query / 100) : ((float) query / 100));
+                        (float) (100 - query) / 100 : (float) query / 100);
             }
         });
     }
