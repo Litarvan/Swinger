@@ -62,7 +62,7 @@ public class Animator {
         Thread t = new Thread() {
             @Override
             public void run() {
-                for(long query = 0; query < to; query += 1)
+                for(long query = 0; query < to + 1; query += 1)
                     loopAction.onLoop(query);
             }
         };
@@ -85,7 +85,7 @@ public class Animator {
         Thread t = new Thread() {
             @Override
             public void run() {
-                for(long query = 0; query < to; query += 1) {
+                for(long query = 0; query < to + 1; query += 1) {
                     loopAction.onLoop(query);
                     try {
                         sleep(toWait);
@@ -115,7 +115,7 @@ public class Animator {
         Thread t = new Thread() {
             @Override
             public void run() {
-                for(long query = from; query < to; query += 1) {
+                for(long query = from; query < to + 1; query += 1) {
                     loopAction.onLoop(query);
                     try {
                         sleep(toWait);
@@ -147,7 +147,7 @@ public class Animator {
         Thread t = new Thread() {
             @Override
             public void run() {
-                for(long query = from; query < to; query += speed) {
+                for(long query = from; query < to + 1; query += speed) {
                     loopAction.onLoop(query);
                     try {
                         sleep(toWait);
@@ -166,7 +166,19 @@ public class Animator {
      *            The frame to fade
      */
     public static void fadeInFrame(Window toFade) {
-        fade(toFade, NORMAL, false);
+        fade(toFade, NORMAL, false, null);
+    }
+
+    /**
+     * Fade in a given frame
+     *
+     * @param toFade
+     *            The frame to fade
+     * @param callback
+     *            A runnable object to call after the fade
+     */
+    public static void fadeInFrame(Window toFade, Runnable callback) {
+        fade(toFade, NORMAL, false, callback);
     }
 
     /**
@@ -179,7 +191,22 @@ public class Animator {
      *            Animator.FAST, or any number you want)
      */
     public static void fadeInFrame(Window toFade, int speed) {
-        fade(toFade, speed, false);
+        fade(toFade, speed, false, null);
+    }
+
+    /**
+     * Fade in a given frame, with a given speed
+     *
+     * @param toFade
+     *            The frame to fade
+     * @param speed
+     *            The speed of the fade (Can be Animator.SLOW, Animator.NORMAL,
+     *            Animator.FAST, or any number you want)
+     * @param callback
+     *            A runnable object to call after the fade
+     */
+    public static void fadeInFrame(Window toFade, int speed, Runnable callback) {
+        fade(toFade, speed, false, callback);
     }
 
     /**
@@ -189,7 +216,19 @@ public class Animator {
      *            The frame to fade
      */
     public static void fadeOutFrame(Window toFade) {
-        fade(toFade, NORMAL, true);
+        fade(toFade, NORMAL, true, null);
+    }
+
+    /**
+     * Fade out a given frame
+     *
+     * @param toFade
+     *            The frame to fade
+     * @param callback
+     *            A runnable object to call after the fade
+     */
+    public static void fadeOutFrame(Window toFade, Runnable callback) {
+        fade(toFade, NORMAL, true, callback);
     }
 
     /**
@@ -202,15 +241,32 @@ public class Animator {
      *            Animator.FAST, or any number you want)
      */
     public static void fadeOutFrame(Window toFade, int speed) {
-        fade(toFade, speed, true);
+        fade(toFade, speed, true, null);
     }
 
-    private static void fade(final Window toFade, final int speed, final boolean inverted) {
+    /**
+     * Fade in a given frame, with a given speed
+     *
+     * @param toFade
+     *            The frame to fade
+     * @param speed
+     *            The speed of the fade (Can be Animator.SLOW, Animator.NORMAL,
+     *            Animator.FAST, or any number you want)
+     * @param callback
+     *            A runnable object to call after the fade
+     */
+    public static void fadeOutFrame(Window toFade, int speed, Runnable callback) {
+        fade(toFade, speed, true, callback);
+    }
+
+    private static void fade(final Window toFade, final int speed, final boolean inverted, final Runnable callback) {
         query(100L, speed, new QueryLoopAction() {
             @Override
             public void onLoop(long query) {
                 AWTUtilities.setWindowOpacity(toFade, inverted ?
                         (float) (100 - query) / 100 : (float) query / 100);
+                if(query == 100L)
+                    callback.run();
             }
         });
     }
