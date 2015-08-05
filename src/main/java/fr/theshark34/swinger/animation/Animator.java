@@ -266,7 +266,8 @@ public class Animator {
                 AWTUtilities.setWindowOpacity(toFade, inverted ?
                         (float) (100 - query) / 100 : (float) query / 100);
                 if(query == 100L)
-                    callback.run();
+                    if(callback != null)
+                        callback.run();
             }
         });
     }
