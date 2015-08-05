@@ -201,7 +201,7 @@ public class Animator {
      *            The speed of the fade (Can be Animator.SLOW, Animator.NORMAL,
      *            Animator.FAST, or any number you want)
      */
-    public static void fadeOutrame(Window toFade, int speed) {
+    public static void fadeOutFrame(Window toFade, int speed) {
         fade(toFade, speed, true);
     }
 
