@@ -35,6 +35,21 @@ import java.awt.Window;
 public class Animator {
 
     /**
+     * A slow speed for animations
+     */
+    public static final int SLOW = 20;
+
+    /**
+     * A normal speed for animations
+     */
+    public static final int NORMAL = 10;
+
+    /**
+     * A fast speed for animations
+     */
+    public static final int FAST = 5;
+
+    /**
      * Increment a number, from 0, to a given number, with a loop, and for each loop,
      * execute the given action with the current incremented number in parameter.
      *
@@ -150,13 +165,21 @@ public class Animator {
      * @param toFade
      *            The frame to fade
      */
-    public static void fadeInFrame(final Window toFade) {
-        query(100L, 500L, new QueryLoopAction() {
-            @Override
-            public void onLoop(long query) {
-                AWTUtilities.setWindowOpacity(toFade, query / 100);
-            }
-        });
+    public static void fadeInFrame(Window toFade) {
+        fade(toFade, NORMAL, false);
+    }
+
+    /**
+     * Fade in a given frame, with a given speed
+     *
+     * @param toFade
+     *            The frame to fade
+     * @param speed
+     *            The speed of the fade (Can be Animator.SLOW, Animator.NORMAL,
+     *            Animator.FAST, or any number you want)
+     */
+    public static void fadeInFrame(Window toFade, int speed) {
+        fade(toFade, speed, false);
     }
 
     /**
@@ -165,11 +188,29 @@ public class Animator {
      * @param toFade
      *            The frame to fade
      */
-    public static void fadeOutrame(final Window toFade) {
-        query(100L, 500L, new QueryLoopAction() {
+    public static void fadeOutFrame(Window toFade) {
+        fade(toFade, NORMAL, true);
+    }
+
+    /**
+     * Fade in a given frame, with a given speed
+     *
+     * @param toFade
+     *            The frame to fade
+     * @param speed
+     *            The speed of the fade (Can be Animator.SLOW, Animator.NORMAL,
+     *            Animator.FAST, or any number you want)
+     */
+    public static void fadeOutrame(Window toFade, int speed) {
+        fade(toFade, speed, true);
+    }
+
+    private static void fade(final Window toFade, final int speed, final boolean inverted) {
+        query(100L, speed, new QueryLoopAction() {
             @Override
             public void onLoop(long query) {
-                AWTUtilities.setWindowOpacity(toFade, 100 - (query / 100));
+                AWTUtilities.setWindowOpacity(toFade, inverted ?
+                        100 - ((float) query / 100) : ((float) query / 100));
             }
         });
     }
