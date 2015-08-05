@@ -18,6 +18,9 @@
  */
 package fr.theshark34.swinger.animation;
 
+import com.sun.awt.AWTUtilities;
+import java.awt.Window;
+
 /**
  * The Animator
  *
@@ -32,8 +35,87 @@ package fr.theshark34.swinger.animation;
 public class Animator {
 
     /**
-     * Increment a number, from a given, to an other, with a loop, and for each loop,
+     * Increment a number, from 0, to a given number, with a loop, and for each loop,
      * execute the given action with the current incremented number in parameter.
+     *
+     * @param to
+     *            The max number
+     * @param loopAction
+     *            The action to execute for each loop
+     */
+    public static void query(final long to, final QueryLoopAction loopAction) {
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                for(long query = 0; query < to; query += 1)
+                    loopAction.onLoop(query);
+            }
+        };
+        t.start();
+    }
+
+    /**
+     * Increment a number, from 0, to a given number, with a loop, and for each loop,
+     * wait a given time, and then execute the given action with the current incremented
+     * number in parameter.
+     *
+     * @param to
+     *            The max number
+     * @param toWait
+     *            The time to wait each loop (in milliseconds)
+     * @param loopAction
+     *            The action to execute for each loop
+     */
+    public static void query(final long to, final long toWait, final QueryLoopAction loopAction) {
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                for(long query = 0; query < to; query += 1) {
+                    loopAction.onLoop(query);
+                    try {
+                        sleep(toWait);
+                    } catch (InterruptedException e) {
+                    }
+                }
+            }
+        };
+        t.start();
+    }
+
+    /**
+     * Increment a number, from a given, to an other, with a loop, and for each loop,,
+     * wait a given time, and then execute the given action with the current incremented
+     * number in parameter.
+     *
+     * @param from
+     *            The number to start incrementing
+     * @param to
+     *            The max number
+     * @param toWait
+     *            The time to wait each loop (in milliseconds)
+     * @param loopAction
+     *            The action to execute for each loop
+     */
+    public static void query(final long from, final long to, final long toWait, final QueryLoopAction loopAction) {
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                for(long query = from; query < to; query += 1) {
+                    loopAction.onLoop(query);
+                    try {
+                        sleep(toWait);
+                    } catch (InterruptedException e) {
+                    }
+                }
+            }
+        };
+        t.start();
+    }
+
+    /**
+     * Increment a number with a given number, from a given, to an other, with a loop, and for each loop,
+     * wait a given time, and then execute the given action with the current incremented
+     * number in parameter.
      *
      * @param from
      *            The number to start incrementing
@@ -41,18 +123,55 @@ public class Animator {
      *            The max number
      * @param speed
      *            The number to add each time
+     * @param toWait
+     *            The time to wait each loop (in milliseconds)
      * @param loopAction
      *            The action to execute for each loop
      */
-    public void query(final int from, final int to, final int speed, final QueryLoopAction loopAction) {
+    public static void query(final long from, final long to, final long speed, final long toWait, final QueryLoopAction loopAction) {
         Thread t = new Thread() {
             @Override
             public void run() {
-                for(int query = from; query < to; query += speed)
+                for(long query = from; query < to; query += speed) {
                     loopAction.onLoop(query);
+                    try {
+                        sleep(toWait);
+                    } catch (InterruptedException e) {
+                    }
+                }
             }
         };
         t.start();
+    }
+
+    /**
+     * Fade in a given frame
+     *
+     * @param toFade
+     *            The frame to fade
+     */
+    public static void fadeInFrame(final Window toFade) {
+        query(100L, 500L, new QueryLoopAction() {
+            @Override
+            public void onLoop(long query) {
+                AWTUtilities.setWindowOpacity(toFade, query / 100);
+            }
+        });
+    }
+
+    /**
+     * Fade out a given frame
+     *
+     * @param toFade
+     *            The frame to fade
+     */
+    public static void fadeOutrame(final Window toFade) {
+        query(100L, 500L, new QueryLoopAction() {
+            @Override
+            public void onLoop(long query) {
+                AWTUtilities.setWindowOpacity(toFade, 100 - (query / 100));
+            }
+        });
     }
 
 }
