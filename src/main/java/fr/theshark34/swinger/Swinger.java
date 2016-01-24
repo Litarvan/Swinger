@@ -263,7 +263,7 @@ public final class Swinger {
      */
     public static Point getRecCenterPos(Rectangle parent, Rectangle rectangle) {
         double x = parent.getWidth() / 2 - rectangle.getWidth() / 2;
-        double y = parent.getHeight() / 2 - rectangle.getHeight() / 2;
+        double y = parent.getHeight() / 2 + rectangle.getHeight() / 2;
 
         return new Point((int) x, (int) y);
     }
