@@ -42,6 +42,10 @@ public abstract class AbstractCheckbox extends JComponent implements MouseListen
      */
     private boolean checked;
 
+    public AbstractCheckbox() {
+        this.addMouseListener(this);
+    }
+
     /**
      * Set the box checked, or not
      *

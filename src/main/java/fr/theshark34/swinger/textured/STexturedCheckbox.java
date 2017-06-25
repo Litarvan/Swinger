@@ -54,6 +54,8 @@ public class STexturedCheckbox extends AbstractCheckbox {
      *            The image of the little check
      */
     public STexturedCheckbox(Image backgroundImage, Image checkImage) {
+        super();
+
         // If the background image is null, throwing an Illegal Argument Exception, else setting it
         if(backgroundImage == null)
             throw new IllegalArgumentException("backgroundImage == null ");
