@@ -54,6 +54,8 @@ public abstract class AbstractCheckbox extends JComponent implements MouseListen
      */
     public void setChecked(boolean checked) {
         this.checked = checked;
+
+        repaint();
     }
 
     /**
@@ -71,9 +73,7 @@ public abstract class AbstractCheckbox extends JComponent implements MouseListen
 
     @Override
     public void mousePressed(MouseEvent e) {
-        checked = !checked;
-
-        repaint();
+        setChecked(!checked);
     }
 
     @Override
