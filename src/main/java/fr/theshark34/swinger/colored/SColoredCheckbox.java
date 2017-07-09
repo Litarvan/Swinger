@@ -89,6 +89,8 @@ public class SColoredCheckbox extends AbstractCheckbox {
      *            The color of the little check
      */
     public SColoredCheckbox(Color backgroundColor, Color checkColor) {
+        super();
+
         // Setting the colors, by their default if they are null, or if not, by the given colors
         this.backgroundColor = backgroundColor == null ? DEFAULT_BACKGROUND_COLOR : backgroundColor;
         this.checkColor = checkColor == null ? DEFAULT_CHECK_COLOR : checkColor;
